@@ -1,16 +1,16 @@
 ﻿using BowlingStats.Models;
+using Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace BowlingStats.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController<HomeController>
     {
-        private readonly ILogger<HomeController> _logger;
+        
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IBowlingContext context) : base(logger, context)
         {
-            _logger = logger;
         }
 
         public IActionResult Index()

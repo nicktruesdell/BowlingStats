@@ -1,0 +1,36 @@
+﻿@model GamesViewModel
+@{
+    ViewData["Title"] = "Games";
+}
+<h1 class="display-4">Games</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Date</th>
+            <th scope="col">#</th>
+            <th scope="col">Scores</th>
+            <th scope="col">Notes</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var game in Model.Items)
+        {
+            <tr>
+                <td>@game.Date.ToShortDateString()</td>
+                <td>@game.Number</td>
+                <td>
+                    <ul>
+                        @foreach (var score in game.Scores)
+                        {
+                            <li>
+                                @string.Format("{0}: {1}", score.Player.Name, score.Points)
+                            </li>
+                        }
+                    </ul>
+                </td>
+                <td>@game.Notes</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a asp-action="Add">Add Game</a>

@@ -1,0 +1,21 @@
+﻿@model PlayersViewModel
+@{
+    ViewData["Title"] = "Players";
+}
+<h1 class="display-4">Players</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var player in Model.Items)
+        {
+            <tr>
+                <td>@player.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a asp-action="Add">Add Player</a>

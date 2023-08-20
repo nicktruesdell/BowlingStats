@@ -1,7 +1,21 @@
+using System.Configuration;
+using Entities;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.Cookie.Name = ".BowlingStats.Session";
+    options.Cookie.IsEssential = true;
+
+});
+builder.Services.AddAutoMapper(typeof(Program));
+string connectionString = builder.Configuration.GetConnectionString("BowlingDb");
+builder.Services.AddDbContext<IBowlingContext, BowlingContext>(options => options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 
@@ -23,5 +37,15 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+using (var scope = app.Services.CreateScope())
+{
+    using (var db = (BowlingContext)scope.ServiceProvider.GetService<IBowlingContext>())
+    {
+        db.Database.Migrate();
+    }
+}
+
+app.UseSession();
 
 app.Run();
