@@ -11,7 +11,7 @@ namespace Entities
         public int GameId { get; set; }
         public DateTime Date { get; set; }
         public int Number { get; set; }
-        public string Notes { get; set; }
+        public string? Notes { get; set; }
 
         public Game()
         {

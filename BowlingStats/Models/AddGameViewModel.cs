@@ -17,7 +17,7 @@ namespace BowlingStats.Models
             set => _dateString = value.ToShortDateString(); 
         }
         public int Number { get; set; }
-        public string Notes { get; set; }
+        public string? Notes { get; set; }
         public IList<AddScoreViewModel> Scores { get; set; }
 
         public AddGameViewModel()

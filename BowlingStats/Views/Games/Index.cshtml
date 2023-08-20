@@ -9,6 +9,8 @@
             <th scope="col">Date</th>
             <th scope="col">#</th>
             <th scope="col">Scores</th>
+            <th scope="col">Strikes</th>
+            <th scope="col">Spares</th>
             <th scope="col">Notes</th>
         </tr>
     </thead>
@@ -24,6 +26,26 @@
                         {
                             <li>
                                 @string.Format("{0}: {1}", score.Player.Name, score.Points)
+                            </li>
+                        }
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        @foreach (var score in game.Scores)
+                        {
+                            <li>
+                                @string.Format("{0}: {1}", score.Player.Name, score.Strikes)
+                            </li>
+                        }
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        @foreach (var score in game.Scores)
+                        {
+                            <li>
+                                @string.Format("{0}: {1}", score.Player.Name, score.Spares)
                             </li>
                         }
                     </ul>
