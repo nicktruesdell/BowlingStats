@@ -1,8 +1,11 @@
-﻿@model GamesViewModel
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@model GamesViewModel
 @{
     ViewData["Title"] = "Games";
 }
 <h1 class="display-4">Games</h1>
+<a asp-action="Add">Add Game</a>
 <table class="table">
     <thead>
         <tr>
@@ -55,4 +58,5 @@
         }
     </tbody>
 </table>
+@Html.PagedListPager((IPagedList)Model.Items, pageNum => Url.Action("Index", new { page = pageNum } )) &nbsp;
 <a asp-action="Add">Add Game</a>

@@ -4,6 +4,7 @@ using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using X.PagedList;
 
 namespace BowlingStats.Controllers
 {
@@ -16,11 +17,13 @@ namespace BowlingStats.Controllers
             _mapper = mapper;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page = 1)
         {
+            int pageSize = 25;
+            var games = _context.Games.Include(g => g.Scores).ThenInclude(s => s.Player).OrderByDescending(g => g.Date).ThenBy(g => g.Number);
             GamesViewModel model = new GamesViewModel()
             {
-                Items = await _context.Games.Include(g => g.Scores).ThenInclude(s => s.Player).OrderByDescending(g => g.Date).ThenBy(g => g.Number).ToListAsync()
+                Items = await games.ToPagedListAsync(page, pageSize)
             };
 
             return View(model);
