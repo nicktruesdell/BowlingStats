@@ -5,6 +5,7 @@ namespace BowlingStats.Models
 {
     public class AddScoreViewModel
     {
+        public int ScoreId { get; set; }
         public int Points { get; set; }
         public int Spares { get; set; }
         public int Strikes { get; set; }

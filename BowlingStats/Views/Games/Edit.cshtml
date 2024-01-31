@@ -1,0 +1,81 @@
+﻿@model AddGameViewModel
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Edit Game";
+}
+
+<h1>Edit</h1>
+
+<h4>Game</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Edit">
+            <input type="hidden" asp-for="GameId" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input type="text" asp-for="Date" asp-format="{0:d}" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Number" class="control-label"></label>
+                <input asp-for="Number" class="form-control" />
+                <span asp-validation-for="Number" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Notes" class="control-label"></label>
+                <textarea asp-for="Notes" class="form-control"></textarea>
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col"><span id="playerHeading">Player</span></th>
+                        <th scope="col"><span id="scoreHeading">Score</th>
+                        <th scope="col"><span id="strikesHeading">Strikes</th>
+                        <th scope="col"><span id="sparesHeading">Spares</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < 2; i++)
+                    {
+                        <tr>
+                            <td>
+                                <input type="hidden" asp-for="Scores[i].ScoreId" />
+                                <select asp-for="Scores[i].PlayerId" asp-items="Model.Players" aria-labelledby="playerHeading" class="form-control">
+                                    <option></option>
+                                </select>
+                            </td>
+                            <td>
+                                <input asp-for="Scores[i].Points" aria-labelledby="scoreHeading" class="form-control" />
+                            </td>
+                            <td>
+                                <input asp-for="Scores[i].Strikes" aria-labelledby="strikesHeading" class="form-control" />
+                            </td>
+                            <td>
+                                <input asp-for="Scores[i].Spares" aria-labelledby="sparesHeading" class="form-control" />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="form-group">
+                <input type="submit" value="Update" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

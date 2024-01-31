@@ -15,6 +15,7 @@
             <th scope="col">Strikes</th>
             <th scope="col">Spares</th>
             <th scope="col">Notes</th>
+            <th scope="col">Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -54,6 +55,7 @@
                     </ul>
                 </td>
                 <td>@game.Notes</td>
+                <td><a asp-action="Edit" asp-route-id="@game.GameId">Edit</a></td>
             </tr>
         }
     </tbody>

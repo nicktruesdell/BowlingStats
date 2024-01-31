@@ -63,6 +63,35 @@ namespace BowlingStats.Controllers
             }
         }
 
+        public async Task<IActionResult> Edit(int id)
+        {
+            var game = await _context.Games.Include("Scores").SingleAsync(x => x.GameId == id);
+            var model = _mapper.Map<AddGameViewModel>(game); // This grabs the scores as well.
+            await InitAddGameViewModel(model);
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(AddGameViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Game game = _mapper.Map<Game>(model);
+                _context.Games.Update(game);
+
+                await _context.SaveChangesAsync();
+                _logger.LogInformation("Game updated", game);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                _logger.LogInformation("Game failed validation");
+                await InitAddGameViewModel(model);
+                return View(model);
+            }
+        }
+
         private async Task InitAddGameViewModel(AddGameViewModel model)
         {
             model.Players = await _context.Players.Select(x => new SelectListItem(x.Name, x.PlayerId.ToString())).ToListAsync();
